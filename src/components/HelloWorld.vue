@@ -1,11 +1,10 @@
 <template>
-  x
   <audio ref="player" src="/1_Intro_MAIN.mp3"></audio>
-  x
-  <div v-for="(item, index) in data" :key="index" :id="`_${index + 1}`" style="gap: 20px; margin-bottom: 20px;"
-    class="grid grid-cols-[1fr_100px_100px] ">
+  <div v-for="(item, index) in data" :key="index" :id="`_${index + 1}`"
+    class="grid grid-cols-[1fr_100px_100px] mb-5 m-auto mt-10 gap-5 max-w-4xl">
 
-    <span>{{ item.text }}</span>
+
+    <span class=" ">{{ index + 1 }} => {{ item.text }}</span>
 
     <button style="width: 100px;" @click="playPart(index, item.mainStartTime, item.endTime, item.startTime)">
       {{ playingIndex === index ? 'pause' : 'play' }}
@@ -73,90 +72,6 @@ const data = reactive([{
   mainStartTime: "00:00:37.791",
   startTime: "00:00:37.791",
   endTime: "00:00:43.050"
-},
-{
-  text: "But the content, the focus, the topics in these lessons are going to be focused on the psychology of learning and the psychology of success.",
-  mainStartTime: "00:00:43.050",
-  startTime: "00:00:43.050",
-  endTime: "00:00:53.670"
-},
-{
-  text: "Now, these ideas, they're not just my ideas.",
-  mainStartTime: "00:00:54.250",
-  startTime: "00:00:54.250",
-  endTime: "00:00:57.011"
-},
-{
-  text: "In fact, they come from a lot of other people.",
-  mainStartTime: "00:00:57.011",
-  startTime: "00:00:57.011",
-  endTime: "00:00:58.930"
-},
-{
-  text: "They come from people like Tony Robbins, who's a famous success coach, Robert Anton Wilson, Joe Vitale, Robert Kiyosaki, Alan Watts.",
-  mainStartTime: "00:00:58.930",
-  startTime: "00:00:58.930",
-  endTime: "00:01:08.790"
-},
-{
-  text: "So, I've taken a lot of ideas from a lot of different people about this topic of the psychology of success.",
-  mainStartTime: "00:01:08.790",
-  startTime: "00:01:08.790",
-  endTime: "00:01:15.071"
-},
-{
-  text: "And the reason that we're going to talk about this in these lessons is that, in my experience, most English students struggle and fail because of psychology.",
-  mainStartTime: "00:01:17.210",
-  startTime: "00:01:17.210",
-  endTime: "00:01:30.210"
-},
-{
-  text: "Not because of methods, not because of teachers.",
-  mainStartTime: "00:01:30.570",
-  startTime: "00:01:30.570",
-  endTime: "00:01:36.810"
-},
-{
-  text: "Those things are important.",
-  mainStartTime: "00:01:36.810",
-  startTime: "00:01:36.810",
-  endTime: "00:01:38.370"
-},
-{
-  text: "But, you know, Tony Robbins talks about the fact that psychology is 80% of success.",
-  mainStartTime: "00:01:38.510",
-  startTime: "00:01:38.510",
-  endTime: "00:01:45.470"
-},
-{
-  text: "And I think he's right, based on my experience with many, many English students.",
-  mainStartTime: "00:01:45.790",
-  startTime: "00:01:45.790",
-  endTime: "00:01:51.290"
-},
-{
-  text: "Psychology is 80% of success.",
-  mainStartTime: "00:01:51.990",
-  startTime: "00:01:51.990",
-  endTime: "00:01:54.071"
-},
-{
-  text: "So, 20% are the methods you use to study.",
-  mainStartTime: "00:01:54.071",
-  startTime: "00:01:54.071",
-  endTime: "00:01:57.710"
-},
-{
-  text: "20% are the schools you go to, the teachers you have, the books you use.",
-  mainStartTime: "00:01:57.710",
-  startTime: "00:01:57.710",
-  endTime: "00:02:03.450"
-},
-{
-  text: "Those are important. We talk a lot about them.",
-  mainStartTime: "00:02:03.450",
-  startTime: "00:02:03.450",
-  endTime: "00:02:05.850"
 }])
 
 
