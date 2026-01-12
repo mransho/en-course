@@ -1,28 +1,48 @@
 <template>
   <audio ref="player" src="/1_Intro_MAIN.mp3"></audio>
-  <div v-for="(item, index) in data" :key="index" :id="`_${index + 1}`"
+  <div v-for="(item, index) in paginatedData" :key="index" :id="`_${index + 1}`"
     class="grid grid-cols-[1fr_100px_100px] mb-5 m-auto mt-10 gap-5 max-w-4xl">
 
 
-    <span class=" ">{{ index + 1 }} => {{ item.text }}</span>
+    <span class=" "> {{ item.text }}</span>
 
     <button style="width: 100px;" @click="playPart(index, item.mainStartTime, item.endTime, item.startTime)">
       {{ playingIndex === index ? 'pause' : 'play' }}
     </button>
+
+
 
     <button style="width: 100px;" @click="rePlay(index, item.mainStartTime, item.endTime, item.startTime)">
       rePlay
     </button>
 
   </div>
+
+  <div class="flex justify-center gap-2 mt-8">
+    <button :disabled="currentPage === 1" @click="currentPage--">
+      Prev
+    </button>
+
+    <button v-for="page in totalPages" :key="page" @click="currentPage = page" :class="[
+      'px-3 py-1 ',
+      currentPage === page ? 'bg-black text-white  active' : 'bg-gray-200'
+    ]">
+      {{ page }}
+    </button>
+
+    <button :disabled="currentPage === totalPages" @click="currentPage++">
+      Next
+    </button>
+  </div>
+
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, computed, watch } from 'vue'
 
 
 const player = ref(null)
-const playingIndex = ref(null) // 1
+const playingIndex = ref(null)
 let currentTime = ref(null)
 
 const data = reactive([{
@@ -72,7 +92,59 @@ const data = reactive([{
   mainStartTime: "00:00:37.791",
   startTime: "00:00:37.791",
   endTime: "00:00:43.050"
+},
+{
+  text: "Please notify us, and we will take immediate legal action against the seller. Thank you.",
+  mainStartTime: "00:00:11.820",
+  startTime: "00:00:11.820",
+  endTime: "00:00:19.160"
+},
+{
+  text: "Hi, this is A.J. Hogue, director of the Effortless English Club.",
+  mainStartTime: "00:00:20.110",
+  startTime: "00:00:20.110",
+  endTime: "00:00:24.310"
+},
+{
+  text: "Welcome to our new set of lessons. These are called the Power English Lessons.",
+  mainStartTime: "00:00:24.310",
+  startTime: "00:00:24.310",
+  endTime: "00:00:29.130"
+},
+{
+  text: "The reason they're called Power English is because in these lessons, we're going to do two things.",
+  mainStartTime: "00:00:29.130",
+  startTime: "00:00:29.130",
+  endTime: "00:00:35.171"
+},
+{
+  text: "Number one, you're going to learn English, of course.",
+  mainStartTime: "00:00:35.171",
+  startTime: "00:00:35.171",
+  endTime: "00:00:37.791"
+},
+{
+  text: "As always, we have the mini-stories, which are our favorite lessons for most of our members.",
+  mainStartTime: "00:00:37.791",
+  startTime: "00:00:37.791",
+  endTime: "00:00:43.050"
 }])
+
+const currentPage = ref(Number(localStorage.getItem('currentPage')) || 1)
+const itemsPerPage = 10
+watch(currentPage, (newPage) => {
+  localStorage.setItem('currentPage', newPage)
+})
+
+
+const paginatedData = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return data.slice(start, end)
+})
+const totalPages = computed(() => {
+  return Math.ceil(data.length / itemsPerPage)
+})
 
 
 function timeToSeconds(timeStr) {
@@ -145,11 +217,26 @@ function playPart(index, mainStartTime, endTime, startTime, rePlayed = false) {
 function rePlay(index, mainStartTime, endTime, startTime) {
   playPart(index, mainStartTime, endTime, mainStartTime, true)
 }
+watch(currentPage, () => {
+  if (!player.value) return
+
+  player.value.pause()
+  playingIndex.value = null
+
+  if (currentUpdateHandler) {
+    player.value.removeEventListener('timeupdate', currentUpdateHandler)
+    currentUpdateHandler = null
+  }
+})
 
 </script>
 
 <style scoped>
 .read-the-docs {
   color: #888;
+}
+
+.active {
+  background: red;
 }
 </style>
